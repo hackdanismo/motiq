@@ -8,35 +8,57 @@
   <title>motiq - Animation Tests</title>
 
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
       margin: 0;
       font-family: Arial, sans-serif;
       background: #f5f5f5;
+      color: #222;
       overflow-x: hidden;
     }
 
+    h1, h2, p {
+      text-align: center;
+    }
+
     h1 {
-      margin-bottom: 30px;
+      margin-bottom: 15px;
     }
 
     h2 {
       margin-bottom: 15px;
     }
 
-    /* Opacity Animation */
-
-    .box {
-      width: 150px;
-      height: 150px;
-      background: #7155e8;
-      border-radius: 12px;
-      opacity: 0;
+    p {
+      color: #666;
+      line-height: 1.6;
     }
+
+    header {
+      padding: 70px 20px 40px;
+      text-align: center;
+    }
+
+    /* Sections */
+
+    .section {
+      width: 100%;
+      padding: 65px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .section.marquee-section {
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+    /* Buttons */
 
     button {
       margin-top: 20px;
@@ -46,23 +68,70 @@
       border: none;
       border-radius: 8px;
       cursor: pointer;
+      font-size: 14px;
     }
 
     button:hover {
       background: #444;
     }
 
-    /* Sections */
-
-    .section {
-      width: 100%;
-      padding: 50px 0;
+    .controls {
       display: flex;
-      flex-direction: column;
-      align-items: center;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      padding: 0 20px;
     }
 
-    /* Marquee Animation */
+    .controls button {
+      margin-top: 0;
+    }
+
+    /* Animation Boxes */
+
+    .box {
+      width: 150px;
+      height: 150px;
+      background: #7155e8;
+      border-radius: 12px;
+    }
+
+    .opacity-box {
+      opacity: 0;
+    }
+
+    .x-box {
+      background: #168b85;
+    }
+
+    .y-box {
+      background: #bc624f;
+    }
+
+    .xy-box {
+      background: #3469a5;
+    }
+
+    /* Movement Animation Areas */
+
+    .animation-stage {
+      width: min(500px, 100%);
+      height: 260px;
+      background: #e8e8ed;
+      border: 1px solid #ddd;
+      border-radius: 16px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: flex-start;
+      padding: 20px;
+      overflow: hidden;
+    }
+
+    .animation-stage.vertical {
+      height: 350px;
+    }
+
+    /* Marquee */
 
     .marquee {
       width: 100%;
@@ -77,11 +146,9 @@
       background: #7155e8;
       color: white;
       border-radius: 12px;
-
       display: flex;
       align-items: center;
       justify-content: center;
-
       font-size: 24px;
       font-weight: bold;
       cursor: pointer;
@@ -103,46 +170,180 @@
       background: #d29a28;
     }
 
-    .controls {
+    /* Scroll Reveal */
+
+    .scroll-section {
+      padding: 100px 20px;
+    }
+
+    .reveal-card {
+      width: min(450px, 100%);
+      min-height: 200px;
+      padding: 35px;
+      margin: 120px auto;
+      border-radius: 16px;
+      background: #7155e8;
+      color: white;
+      text-align: center;
       display: flex;
-      gap: 10px;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
     }
 
-    .controls button {
-      margin-top: 0;
+    .reveal-card h3 {
+      font-size: 26px;
+      margin: 0 0 12px;
     }
 
-    p {
-      color: #666;
+    .reveal-card p {
+      color: rgba(255, 255, 255, 0.8);
+      margin: 0;
+    }
+
+    .reveal-left {
+      background: #7155e8;
+    }
+
+    .reveal-right {
+      background: #168b85;
+    }
+
+    .reveal-bottom {
+      background: #bc624f;
+    }
+
+    .reveal-top {
+      background: #3469a5;
+    }
+
+    footer {
+      padding: 80px 20px;
+      text-align: center;
+      background: #222;
+      color: white;
+    }
+
+    footer p {
+      color: #bbb;
+    }
+
+    @media (max-width: 600px) {
+      .box {
+        width: 100px;
+        height: 100px;
+      }
+
+      .animation-stage {
+        height: 220px;
+      }
+
+      .animation-stage.vertical {
+        height: 300px;
+      }
     }
   </style>
 </head>
 
 <body>
 
-  <h1>motiq Animation Library</h1>
+  <header>
+    <h1>motiq Animation Library</h1>
+    <p>Testing animations built with motiq.js</p>
+  </header>
 
-  <!-- OPACITY ANIMATION -->
+
+  <!-- ========================= -->
+  <!-- 1. OPACITY ANIMATION -->
+  <!-- ========================= -->
 
   <section class="section">
 
-    <h2>Opacity Animation</h2>
+    <h2>1. Opacity Animation</h2>
 
-    <div class="box"></div>
+    <p>Fade an element into view.</p>
 
-    <button id="animateBtn">
+    <div class="box opacity-box"></div>
+
+    <button id="animateOpacityBtn">
       Animate Opacity
     </button>
 
   </section>
 
-  <!-- MARQUEE ANIMATION -->
+
+  <!-- ========================= -->
+  <!-- 2. X ANIMATION -->
+  <!-- ========================= -->
 
   <section class="section">
 
-    <h2>Marquee Animation</h2>
+    <h2>2. X Animation</h2>
 
-    <p>Hover over a card to pause the animation</p>
+    <p>Move an element horizontally.</p>
+
+    <div class="animation-stage">
+      <div class="box x-box"></div>
+    </div>
+
+    <button id="animateXBtn">
+      Animate X
+    </button>
+
+  </section>
+
+
+  <!-- ========================= -->
+  <!-- 3. Y ANIMATION -->
+  <!-- ========================= -->
+
+  <section class="section">
+
+    <h2>3. Y Animation</h2>
+
+    <p>Move an element vertically.</p>
+
+    <div class="animation-stage vertical">
+      <div class="box y-box"></div>
+    </div>
+
+    <button id="animateYBtn">
+      Animate Y
+    </button>
+
+  </section>
+
+
+  <!-- ========================= -->
+  <!-- 4. COMBINED X + Y -->
+  <!-- ========================= -->
+
+  <section class="section">
+
+    <h2>4. Combined X + Y Animation</h2>
+
+    <p>Move an element diagonally.</p>
+
+    <div class="animation-stage">
+      <div class="box xy-box"></div>
+    </div>
+
+    <button id="animateXYBtn">
+      Animate X + Y
+    </button>
+
+  </section>
+
+
+  <!-- ========================= -->
+  <!-- 5. MARQUEE ANIMATION -->
+  <!-- ========================= -->
+
+  <section class="section marquee-section">
+
+    <h2>5. Marquee Animation</h2>
+
+    <p>Hover over a card to pause the scrolling.</p>
 
     <div class="marquee">
       <div class="card">HTML</div>
@@ -160,34 +361,141 @@
 
   </section>
 
+
+  <!-- ========================= -->
+  <!-- 6. SCROLL REVEAL -->
+  <!-- ========================= -->
+
+  <section class="section scroll-section">
+
+    <h2>6. Scroll Reveal Animations</h2>
+
+    <p>Scroll down to trigger each animation.</p>
+
+    <div class="reveal-card reveal-left">
+      <h3>Slide From Left</h3>
+      <p>This card slides in from the left.</p>
+    </div>
+
+    <div class="reveal-card reveal-right">
+      <h3>Slide From Right</h3>
+      <p>This card slides in from the right.</p>
+    </div>
+
+    <div class="reveal-card reveal-bottom">
+      <h3>Slide From Bottom</h3>
+      <p>This card slides up into view.</p>
+    </div>
+
+    <div class="reveal-card reveal-top">
+      <h3>Slide From Top</h3>
+      <p>This card slides down into view.</p>
+    </div>
+
+  </section>
+
+
+  <footer>
+    <h2>Powered by motiq</h2>
+    <p>A lightweight JavaScript animation library.</p>
+  </footer>
+
+
+  <!-- ========================= -->
+  <!-- MOTIQ JAVASCRIPT -->
+  <!-- ========================= -->
+
   <script type="module">
 
     import motiq from "./src/index.js";
 
-    // -----------------------------
-    // OPACITY ANIMATION
-    // -----------------------------
 
-    const box = document.querySelector(".box");
-    const animateBtn = document.querySelector("#animateBtn");
+    // ============================
+    // 1. OPACITY ANIMATION
+    // ============================
 
-    animateBtn.addEventListener("click", () => {
+    const opacityBox = document.querySelector(".opacity-box");
 
-      // Reset opacity
-      box.style.opacity = 0;
+    document.querySelector("#animateOpacityBtn")
+      .addEventListener("click", () => {
 
-      // Animate using motiq
-      motiq.to(box, {
-        opacity: 1,
-        duration: 1500
+        opacityBox.style.opacity = 0;
+
+        motiq.to(opacityBox, {
+          opacity: 1,
+          duration: 1500
+        });
+
       });
 
-    });
+
+    // ============================
+    // 2. X ANIMATION
+    // ============================
+
+    const xBox = document.querySelector(".x-box");
+
+    let xPosition = 0;
+
+    document.querySelector("#animateXBtn")
+      .addEventListener("click", () => {
+
+        xPosition = xPosition === 0 ? 200 : 0;
+
+        motiq.to(xBox, {
+          x: xPosition,
+          duration: 1000
+        });
+
+      });
 
 
-    // -----------------------------
-    // MARQUEE ANIMATION
-    // -----------------------------
+    // ============================
+    // 3. Y ANIMATION
+    // ============================
+
+    const yBox = document.querySelector(".y-box");
+
+    let yPosition = 0;
+
+    document.querySelector("#animateYBtn")
+      .addEventListener("click", () => {
+
+        yPosition = yPosition === 0 ? 180 : 0;
+
+        motiq.to(yBox, {
+          y: yPosition,
+          duration: 1000
+        });
+
+      });
+
+
+    // ============================
+    // 4. COMBINED X + Y
+    // ============================
+
+    const xyBox = document.querySelector(".xy-box");
+
+    let xyPosition = false;
+
+    document.querySelector("#animateXYBtn")
+      .addEventListener("click", () => {
+
+        xyPosition = !xyPosition;
+
+        motiq.to(xyBox, {
+          x: xyPosition ? 200 : 0,
+          y: xyPosition ? 60 : 0,
+          duration: 1000
+        });
+
+      });
+
+
+    // ============================
+    // 5. MARQUEE ANIMATION
+    // ============================
 
     const marquee = motiq.marquee(".marquee", {
       speed: 80,
@@ -196,26 +504,53 @@
       pauseOnHover: true
     });
 
-
-    // Pause marquee
     document.querySelector("#pauseBtn")
       .addEventListener("click", () => {
         marquee.pause();
       });
 
-
-    // Resume marquee
     document.querySelector("#playBtn")
       .addEventListener("click", () => {
         marquee.play();
       });
 
-
-    // Destroy marquee
     document.querySelector("#destroyBtn")
       .addEventListener("click", () => {
         marquee.destroy();
       });
+
+
+    // ============================
+    // 6. SCROLL REVEAL
+    // ============================
+
+    motiq.reveal(".reveal-left", {
+      direction: "left",
+      distance: 150,
+      duration: 1000,
+      once: true
+    });
+
+    motiq.reveal(".reveal-right", {
+      direction: "right",
+      distance: 150,
+      duration: 1000,
+      once: true
+    });
+
+    motiq.reveal(".reveal-bottom", {
+      direction: "bottom",
+      distance: 100,
+      duration: 800,
+      once: true
+    });
+
+    motiq.reveal(".reveal-top", {
+      direction: "top",
+      distance: 100,
+      duration: 800,
+      once: true
+    });
 
   </script>
 
